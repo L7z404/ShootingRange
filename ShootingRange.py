@@ -13,18 +13,21 @@ land_bg = pygame.image.load('Land_BG.png')
 water_bg = pygame.image.load('Water_BG.png')
 cloud1_bg = pygame.image.load('Cloud1.png')
 cloud2_bg = pygame.image.load('Cloud2.png')
+crosshair = pygame.image.load('crosshair.png')
 
 land_position_y = 375
 land_speed = 1
 
 water_position_y = 440
-water_speed = 1
+water_speed = 1.5
 
 while True:
     for event in pygame.event.get():  # pygame searching for events (searches for all player input)
         if event.type == pygame.QUIT:  # check for closing button of the window
             pygame.quit()  # closes just the pygame module
             sys.exit()  # closes the program completely
+        if event.type == pygame.MOUSEMOTION: #checking if the mouse is moving
+            crosshair_rect = crosshair.get_rect(center = event.pos) #drawing a rectangle around the surface and placing it's center on the position of the mouse
 
     # -------------Background placements-----------------
     screen.blit(wood_bg, (0, 0))
@@ -42,6 +45,9 @@ while True:
     if water_position_y <= 420 or water_position_y >= 450:
         water_speed *= -1
     screen.blit(water_bg, (0, water_position_y))
+    
+    # -------------Crosshair Placement-----------------
+    screen.blit(crosshair,crosshair_rect)
 
     # -------------Cloud Placement-----------------
     screen.blit(cloud1_bg, (50, 50))
