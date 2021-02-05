@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 pygame.init()  # starting pygame
 
@@ -14,12 +15,22 @@ water_bg = pygame.image.load('Water_BG.png')
 cloud1_bg = pygame.image.load('Cloud1.png')
 cloud2_bg = pygame.image.load('Cloud2.png')
 crosshair = pygame.image.load('crosshair.png')
+duck_surface = pygame.image.load('duck.png')
 
+#For animations of water and land moving up and down
 land_position_y = 375
 land_speed = 1
 
 water_position_y = 440
 water_speed = 1.5
+
+#creating rectangles for ducks
+duck_list = []
+for duck in range(20):
+    duck_position_x = random.randrange(30,850)
+    duck_position_y = random.randrange(80,450)
+    duck_rect = duck_surface.get_rect(center =(duck_position_x, duck_position_y))
+    duck_list.append(duck_rect)
 
 while True:
     for event in pygame.event.get():  # pygame searching for events (searches for all player input)
@@ -31,6 +42,10 @@ while True:
 
     # -------------Background placements-----------------
     screen.blit(wood_bg, (0, 0))
+
+    # -------------Duck Placement-----------------
+    for duck_rect in duck_list:
+        screen.blit(duck_surface, duck_rect)
 
     # -------------land movement + placement-----------------
     land_position_y -= land_speed
@@ -45,6 +60,7 @@ while True:
     if water_position_y <= 420 or water_position_y >= 450:
         water_speed *= -1
     screen.blit(water_bg, (0, water_position_y))
+    
     
     # -------------Crosshair Placement-----------------
     screen.blit(crosshair,crosshair_rect)
